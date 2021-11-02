@@ -23,15 +23,28 @@ function App() {
           component="h1" // O componente e um H1, porém com estilo do H3
           variant="h3"
           align="center"
-          color="textPrimary"
-        >
+          color="textPrimary">
           Formulário de cadastro
         </Typography>
 
-        <FormRegister />
+        <FormRegister
+          toSend={methods.imprimirDados}
+          validadeCPF={methods.cpfValidation}
+        />
       </div>
     </Container>
   );
+}
+
+const methods = {
+  imprimirDados(dados) {
+    console.log(dados);
+  },
+  cpfValidation(cpf) {
+    if (cpf.length !== 11) {
+        return { validation: false, text: "Formato de CPF inválido" }
+      } else { return { validation: true, text: "" } };
+    }
 }
 
 export default App;
