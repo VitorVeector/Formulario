@@ -11,6 +11,12 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+/* MODELS */
+import {cpfValidation, passValidation} from './components/formRegister/models/register'
+
+/* CONTEXT */
+import RegisterValidate from './contexts/RegisterValidate'
+
 function App() {
   return (
     <Container
@@ -27,10 +33,10 @@ function App() {
           Formulário de cadastro
         </Typography>
 
-        <FormRegister
-          toSend={methods.imprimirDados}
-          validadeCPF={methods.cpfValidation}
-        />
+        <RegisterValidate.Provider value={{cpf: cpfValidation, pass: passValidation}}>
+          <FormRegister
+            toSend={methods.imprimirDados}/>
+        </RegisterValidate.Provider>
       </div>
     </Container>
   );
@@ -40,11 +46,7 @@ const methods = {
   imprimirDados(dados) {
     console.log(dados);
   },
-  cpfValidation(cpf) {
-    if (cpf.length !== 11) {
-        return { validation: false, text: "Formato de CPF inválido" }
-      } else { return { validation: true, text: "" } };
-    }
+  
 }
 
 export default App;
